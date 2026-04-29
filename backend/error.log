@@ -1,0 +1,7 @@
+TypeError: Cannot read properties of null (reading '_id')
+    at file:///C:/Users/Asus/redia%20io/backend/controllers/orderController.js:25:24
+    at asyncUtilWrap (C:\Users\Asus\redia io\backend\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handleRequest (C:\Users\Asus\redia io\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Asus\redia io\backend\node_modules\router\lib\route.js:157:13)
+    at file:///C:/Users/Asus/redia%20io/backend/middlewares/authMiddleware.js:19:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n\n
