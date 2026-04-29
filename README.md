@@ -120,8 +120,29 @@ npm run dev
 ## 📸 Screenshots
 
 | Home Page | Order Tracker | Admin Dashboard |
-| :--- | :--- | :--- |
-| ![Home](https://images.pexels.com/photos/5082579/pexels-photo-5082579.jpeg?auto=compress&cs=tinysrgb&w=300) | ![Tracker](https://images.pexels.com/photos/4482900/pexels-photo-4482900.jpeg?auto=compress&cs=tinysrgb&w=300) | ![Admin](https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=300) |
+<img width="1919" height="822" alt="image" src="https://github.com/user-attachments/assets/cbcd9549-1f29-4f9e-9bff-1cebeff6ec83" />
+<img width="1911" height="905" alt="image" src="https://github.com/user-attachments/assets/42388a9e-055f-4864-93f6-6ee9a44680c2" />
+<img width="1910" height="906" alt="image" src="https://github.com/user-attachments/assets/0652e5e8-048f-41ac-bba9-7a590c8136b3" />
+<img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/dee1a287-332a-4356-8a4a-779d566d9c78" />
+<img width="1919" height="921" alt="image" src="https://github.com/user-attachments/assets/9b18f19e-994a-4c14-a5e4-eba37540f207" />
+<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/d02a8c09-143e-4b3a-bdd7-0af02647d5dc" />
+<img width="1917" height="907" alt="image" src="https://github.com/user-attachments/assets/6b0cfe03-5b59-45c1-8ee1-73b40b220143" />
+<img width="1919" height="905" alt="image" src="https://github.com/user-attachments/assets/6d649602-5533-41cf-8dfa-e1e7ddb3bb5c" />
+<img width="1919" height="825" alt="image" src="https://github.com/user-attachments/assets/7ff8ba68-66fb-4a1f-8e5c-5a557a52cd89" />
+<img width="1919" height="902" alt="image" src="https://github.com/user-attachments/assets/ffc3073e-5f36-4839-a4e8-bab23154e4f7" />
+<img width="1918" height="824" alt="image" src="https://github.com/user-attachments/assets/e7951a6f-fb78-4418-bff9-eba344edd723" />
+<img width="1918" height="816" alt="image" src="https://github.com/user-attachments/assets/c12b01a1-b9c3-45d3-b79f-7e3bbf69967e" />
+<img width="1919" height="827" alt="image" src="https://github.com/user-attachments/assets/468edd97-ea06-46a1-bc66-71bd21f4ba6e" />
+<img width="1916" height="826" alt="image" src="https://github.com/user-attachments/assets/942bf156-0534-4640-949d-56d5d3d69daa" />
+<img width="1910" height="829" alt="image" src="https://github.com/user-attachments/assets/28bb2224-1e25-4eca-a050-b7436793bc88" />
+<img width="1918" height="910" alt="image" src="https://github.com/user-attachments/assets/aee6029f-40dd-43cf-9102-34fae7060338" />
+<img width="1919" height="823" alt="image" src="https://github.com/user-attachments/assets/9a12b8b6-9699-464b-9080-a666b0e66de6" />
+<img width="1919" height="908" alt="image" src="https://github.com/user-attachments/assets/02f2d6db-7cbe-48f0-8b23-80e8ccdbff2b" />
+<img width="1086" height="803" alt="image" src="https://github.com/user-attachments/assets/ea4bf93c-4020-4ccd-956a-af26fb2fd8e2" />
+<img width="1919" height="813" alt="image" src="https://github.com/user-attachments/assets/a396f424-4b0f-4eeb-95a8-63fa7cc95638" />
+<img width="1919" height="819" alt="image" src="https://github.com/user-attachments/assets/4f8174be-8e35-4156-ac81-0fdee7238c27" />
+<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/8f7521e8-71d8-4dd2-9363-1856e966dfe8" />
+<img width="1905" height="818" alt="image" src="https://github.com/user-attachments/assets/9f04ffe8-a995-4f63-a2b4-29a4ab56eddf" />
 
 ## 📜 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
