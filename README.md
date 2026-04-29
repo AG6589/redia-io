@@ -127,4 +127,4 @@ npm run dev
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-Built with ❤️ by [Antigravity AI](https://github.com/google-deepmind)
+Built with ❤️ by [Aman Gupta](https://github.com/google-deepmind)
