@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { useGetOrderDetailsQuery, usePayOrderMutation, useDeliverOrderMutation } from '../slices/ordersApiSlice';
+import { useGetOrderDetailsQuery, usePayOrderMutation, useDeliverOrderMutation, useShipOrderMutation } from '../slices/ordersApiSlice';
 import { useSelector } from 'react-redux';
-import { CheckCircle, XCircle, CreditCard, Truck } from 'lucide-react';
+import { CheckCircle, XCircle, CreditCard, Truck, Package } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const OrderDetailsPage = () => {
@@ -11,12 +11,23 @@ const OrderDetailsPage = () => {
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
   const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
+  const [shipOrder, { isLoading: loadingShip }] = useShipOrderMutation();
 
   const deliverOrderHandler = async () => {
     try {
       await deliverOrder(orderId);
       refetch();
       toast.success('Order delivered');
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
+
+  const shipOrderHandler = async () => {
+    try {
+      await shipOrder(orderId);
+      refetch();
+      toast.success('Order shipped');
     } catch (err) {
       toast.error(err?.data?.message || err.message);
     }
@@ -38,7 +49,7 @@ const OrderDetailsPage = () => {
   const steps = [
     { label: 'Order Placed', completed: true, date: order.createdAt },
     { label: order.paymentMethod === 'Cash On Delivery' ? 'Payment (COD)' : 'Payment Confirmed', completed: order.isPaid || order.paymentMethod === 'Cash On Delivery', date: order.paidAt },
-    { label: 'Shipped', completed: order.isDelivered, date: order.deliveredAt },
+    { label: 'Shipped', completed: order.isShipped, date: order.shippedAt },
     { label: 'Delivered', completed: order.isDelivered, date: order.deliveredAt },
   ];
 
@@ -80,15 +91,28 @@ const OrderDetailsPage = () => {
             <p className="mb-2"><strong className="text-slate-800">Name:</strong> {order.user.name}</p>
             <p className="mb-2"><strong className="text-slate-800">Email:</strong> {order.user.email}</p>
             <p className="mb-4"><strong className="text-slate-800">Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city} {order.shippingAddress.postalCode}, {order.shippingAddress.country}</p>
-            {order.isDelivered ? (
-              <div className="bg-emerald-50 text-emerald-600 p-3 rounded-lg flex items-center gap-2 font-medium">
-                <CheckCircle size={18}/> Delivered on {order.deliveredAt.substring(0, 10)}
-              </div>
-            ) : (
-              <div className="bg-rose-50 text-rose-600 p-3 rounded-lg flex items-center gap-2 font-medium">
-                <XCircle size={18}/> Not Delivered
-              </div>
-            )}
+            
+            <div className="space-y-2">
+              {order.isShipped ? (
+                <div className="bg-blue-50 text-blue-600 p-3 rounded-lg flex items-center gap-2 font-medium">
+                  <Package size={18}/> Shipped on {order.shippedAt.substring(0, 10)}
+                </div>
+              ) : (
+                <div className="bg-amber-50 text-amber-600 p-3 rounded-lg flex items-center gap-2 font-medium">
+                  <Package size={18}/> Not Shipped
+                </div>
+              )}
+
+              {order.isDelivered ? (
+                <div className="bg-emerald-50 text-emerald-600 p-3 rounded-lg flex items-center gap-2 font-medium">
+                  <CheckCircle size={18}/> Delivered on {order.deliveredAt.substring(0, 10)}
+                </div>
+              ) : (
+                <div className="bg-rose-50 text-rose-600 p-3 rounded-lg flex items-center gap-2 font-medium">
+                  <XCircle size={18}/> Not Delivered
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
@@ -140,12 +164,20 @@ const OrderDetailsPage = () => {
               Please pay with cash upon delivery.
             </div>
           )}
+          
           {userInfo && userInfo.isAdmin && !order.isPaid && (
              <button disabled={loadingPay} onClick={payOrderHandler} className="w-full mb-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-colors">
                {loadingPay ? 'Updating...' : 'Mark as Paid'}
              </button>
           )}
-          {userInfo && userInfo.isAdmin && (order.isPaid || order.paymentMethod === 'Cash On Delivery') && !order.isDelivered && (
+
+          {userInfo && userInfo.isAdmin && (order.isPaid || order.paymentMethod === 'Cash On Delivery') && !order.isShipped && (
+             <button disabled={loadingShip} onClick={shipOrderHandler} className="w-full mb-3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors">
+               {loadingShip ? 'Updating...' : 'Mark as Shipped'}
+             </button>
+          )}
+
+          {userInfo && userInfo.isAdmin && order.isShipped && !order.isDelivered && (
              <button disabled={loadingDeliver} onClick={deliverOrderHandler} className="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl transition-colors">
                {loadingDeliver ? 'Updating...' : 'Mark as Delivered'}
              </button>
