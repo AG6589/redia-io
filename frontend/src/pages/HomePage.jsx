@@ -13,7 +13,7 @@ const HomePage = () => {
     pageNumber: 1 
   });
 
-  const categories = ['Electronics', 'Accessories', 'Fashion', 'Home', 'Gadgets'];
+  const categories = ['Electronics', 'Cameras', 'Gaming'];
 
   return (
     <div className="pb-12">

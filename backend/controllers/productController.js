@@ -106,6 +106,12 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const { title, price, description, image, brand, category, stock } = req.body;
 
+  if (!title || price === undefined) {
+    return res.status(400).json({
+      message: 'Invalid product data',
+    });
+  }
+
   if (price < 0 || stock < 0) {
     res.status(400);
     throw new Error('Price and stock must be non-negative values');

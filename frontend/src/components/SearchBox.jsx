@@ -8,7 +8,7 @@ const SearchBox = () => {
   const [keyword, setKeyword] = useState(urlKeyword || '');
   const [category, setCategory] = useState('');
 
-  const categories = ['Electronics', 'Accessories', 'Fashion', 'Home', 'Gadgets'];
+  const categories = ['Electronics', 'Cameras', 'Gaming'];
 
   const submitHandler = (e) => {
     e.preventDefault();
