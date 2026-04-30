@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
 import ProductCard from '../components/ProductCard';
-import { ArrowRight, Zap, ShieldCheck, Truck } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { ArrowRight, Zap, ShieldCheck, Truck, Filter } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
 
 const HomePage = () => {
   const { keyword } = useParams();
-  const { data, isLoading, error } = useGetProductsQuery({ keyword: keyword || '', pageNumber: 1 });
+  const [category, setCategory] = useState('');
+  const { data, isLoading, error } = useGetProductsQuery({ 
+    keyword: keyword || '', 
+    category,
+    pageNumber: 1 
+  });
+
+  const categories = ['Electronics', 'Accessories', 'Fashion', 'Home', 'Gadgets'];
 
   return (
     <div className="pb-12">
@@ -69,7 +77,7 @@ const HomePage = () => {
 
       {/* Products Grid */}
       <div id="products" className="container mx-auto px-4 lg:px-0">
-        <div className="flex items-end justify-between mb-8 mt-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 mt-8 gap-6">
           <div>
             <h2 className="text-3xl font-black text-slate-900 tracking-tight">
               {keyword ? `Search Results for "${keyword}"` : 'Trending Products'}
@@ -77,6 +85,24 @@ const HomePage = () => {
             <p className="text-slate-500 mt-2">
               {keyword ? 'Products matching your search' : 'The most sought-after tech this week'}
             </p>
+          </div>
+
+          <div className="flex items-center gap-3 overflow-x-auto pb-2 w-full md:w-auto">
+            <button 
+              onClick={() => setCategory('')}
+              className={`px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${category === '' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
+            >
+              All Products
+            </button>
+            {categories.map((cat) => (
+              <button 
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${category === cat ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
 

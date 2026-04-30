@@ -19,6 +19,9 @@ import UserList from './pages/admin/UserList';
 import ProductEditPage from './pages/admin/ProductEditPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
+
 function App() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-indigo-500 selection:text-white">
@@ -30,17 +33,26 @@ function App() {
           <Route path="/product/:id" element={<ProductDetailsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/shipping" element={<ShippingPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/placeorder" element={<PlaceOrderPage />} />
-          <Route path="/order/:id" element={<OrderDetailsPage />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/products" element={<ProductList />} />
-          <Route path="/admin/product/:id/edit" element={<ProductEditPage />} />
-          <Route path="/admin/orders" element={<OrderList />} />
-          <Route path="/admin/users" element={<UserList />} />
+
+          {/* Registered Users */}
+          <Route path="" element={<ProtectedRoute />}>
+            <Route path="/shipping" element={<ShippingPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/placeorder" element={<PlaceOrderPage />} />
+            <Route path="/order/:id" element={<OrderDetailsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Route>
+
+          {/* Admin Users */}
+          <Route path="" element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/products" element={<ProductList />} />
+            <Route path="/admin/product/:id/edit" element={<ProductEditPage />} />
+            <Route path="/admin/orders" element={<OrderList />} />
+            <Route path="/admin/users" element={<UserList />} />
+          </Route>
         </Routes>
       </main>
       <Footer />

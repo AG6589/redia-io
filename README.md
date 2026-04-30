@@ -94,20 +94,17 @@ npm install
 # Install frontend dependencies
 cd ../frontend
 npm install
-\`\`\`
+```
 
-### 5. Seeding Data (Optional)
-To populate the database with sample products and users:
-\`\`\`bash
+### 5. Seeding Data (Crucial)
+To populate the database with sample products and the default Admin user:
+```bash
 cd backend
 npm run data:import
-\`\`\`
+```
 
 ### 6. Run the Application
-\`\`\`bash
-# Run both frontend & backend concurrently
-# (Make sure you have concurrently installed or run in separate terminals)
-
+```bash
 # Terminal 1: Backend
 cd backend
 npm run dev
@@ -115,7 +112,36 @@ npm run dev
 # Terminal 2: Frontend
 cd frontend
 npm run dev
-\`\`\`
+```
+
+## 🔐 Admin Credentials
+Use these credentials to access the Admin Panel:
+- **Email:** `admin@example.com`
+- **Password:** `123456`
+
+## 📡 API Endpoints
+
+### Products
+- `GET /api/products` - Get all products (supports `keyword`, `category`, `pageNumber` query params)
+- `GET /api/products/:id` - Get product by ID
+- `POST /api/products` - Create a product (Admin)
+- `PUT /api/products/:id` - Update a product (Admin)
+- `DELETE /api/products/:id` - Delete a product (Admin)
+
+### Users
+- `POST /api/users/login` - Auth user & get token
+- `POST /api/users` - Register a new user
+- `GET /api/users/profile` - Get user profile
+- `PUT /api/users/profile` - Update user profile
+- `GET /api/users` - Get all users (Admin)
+
+### Orders
+- `POST /api/orders` - Create new order
+- `GET /api/orders/myorders` - Get logged in user orders
+- `GET /api/orders/:id` - Get order by ID
+- `PUT /api/orders/:id/pay` - Update order to paid
+- `PUT /api/orders/:id/deliver` - Update order to delivered (Admin)
+- `GET /api/orders` - Get all orders (Admin)
 
 ## 📸 Screenshots
 

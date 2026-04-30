@@ -10,15 +10,35 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-        title: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
+        $or: [
+          {
+            title: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+          {
+            description: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+          {
+            category: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+        ],
       }
     : {};
 
-  const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
+  const categoryFilter = req.query.category ? { category: req.query.category } : {};
+
+  const query = { ...keyword, ...categoryFilter };
+
+  const count = await Product.countDocuments(query);
+  const products = await Product.find(query)
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
@@ -80,16 +100,21 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const { title, price, description, image, brand, category, stock } = req.body;
 
+  if (price < 0 || stock < 0) {
+    res.status(400);
+    throw new Error('Price and stock must be non-negative values');
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {
-    product.title = title;
-    product.price = price;
-    product.description = description;
-    product.image = image;
-    product.brand = brand;
-    product.category = category;
-    product.stock = stock;
+    product.title = title || product.title;
+    product.price = price === undefined ? product.price : price;
+    product.description = description || product.description;
+    product.image = image || product.image;
+    product.brand = brand || product.brand;
+    product.category = category || product.category;
+    product.stock = stock === undefined ? product.stock : stock;
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
