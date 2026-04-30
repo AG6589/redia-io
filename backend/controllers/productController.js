@@ -29,6 +29,12 @@ const getProducts = asyncHandler(async (req, res) => {
               $options: 'i',
             },
           },
+          {
+            brand: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
         ],
       }
     : {};

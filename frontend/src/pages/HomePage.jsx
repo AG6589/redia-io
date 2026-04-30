@@ -75,57 +75,119 @@ const HomePage = () => {
         </>
       )}
 
-      {/* Products Grid */}
-      <div id="products" className="container mx-auto px-4 lg:px-0">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 mt-8 gap-6">
-          <div>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-              {keyword ? `Search Results for "${keyword}"` : 'Trending Products'}
-            </h2>
-            <p className="text-slate-500 mt-2">
-              {keyword ? 'Products matching your search' : 'The most sought-after tech this week'}
-            </p>
-          </div>
+      {/* Products Section */}
+      <div id="products" className="container mx-auto px-4 lg:px-0 mt-12">
+        <div className="flex flex-col lg:flex-row gap-10">
+          
+          {/* Sidebar - Category Filter */}
+          <aside className="lg:w-1/4 space-y-8">
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 sticky top-28">
+              <div className="flex items-center gap-2 mb-8 text-slate-900">
+                <Filter size={20} className="text-indigo-600" />
+                <h3 className="text-xl font-black tracking-tight">Categories</h3>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <button 
+                  onClick={() => setCategory('')}
+                  className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-bold transition-all ${category === '' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'}`}
+                >
+                  All Products
+                  {category === '' && <ArrowRight size={14} />}
+                </button>
+                {categories.map((cat) => (
+                  <button 
+                    key={cat}
+                    onClick={() => setCategory(cat)}
+                    className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-bold transition-all ${category === cat ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'}`}
+                  >
+                    {cat}
+                    {category === cat && <ArrowRight size={14} />}
+                  </button>
+                ))}
+              </div>
 
-          <div className="flex items-center gap-3 overflow-x-auto pb-2 w-full md:w-auto">
-            <button 
-              onClick={() => setCategory('')}
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${category === '' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
-            >
-              All Products
-            </button>
-            {categories.map((cat) => (
-              <button 
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${category === cat ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
-              >
-                {cat}
-              </button>
-            ))}
+              {/* Price Filter Placeholder (Optional addition for 'Functional' feel) */}
+              <div className="mt-10 pt-8 border-t border-slate-100">
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Price Range</h4>
+                <div className="flex flex-col gap-3">
+                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full w-2/3 bg-indigo-500 rounded-full"></div>
+                  </div>
+                  <div className="flex justify-between text-xs font-bold text-slate-500">
+                    <span>$0</span>
+                    <span>$2000+</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* Main Content - Products Grid */}
+          <div className="lg:w-3/4">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
+              <div>
+                <h2 className="text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                  {keyword ? (
+                    <>Search: <span className="text-indigo-600">"{keyword}"</span></>
+                  ) : category ? (
+                    <>Category: <span className="text-indigo-600">{category}</span></>
+                  ) : (
+                    'Trending Products'
+                  )}
+                </h2>
+                <p className="text-slate-500 mt-2 font-medium">
+                  {data?.products?.length || 0} premium items available
+                </p>
+              </div>
+
+              {/* Mobile Category Toggle (Only visible on small screens) */}
+              <div className="lg:hidden w-full">
+                <select 
+                  value={category} 
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  <option value="">All Categories</option>
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {isLoading ? (
+              <div className="flex justify-center items-center h-96">
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-8 h-8 border-4 border-purple-100 border-b-purple-600 rounded-full animate-spin-slow"></div>
+                  </div>
+                </div>
+              </div>
+            ) : error ? (
+              <div className="bg-rose-50 text-rose-600 p-8 rounded-3xl border border-rose-100 text-center font-bold shadow-sm">
+                <p className="text-lg">Something went wrong</p>
+                <p className="text-sm opacity-70 mt-1 font-medium">{error?.data?.message || error.error}</p>
+              </div>
+            ) : data.products.length === 0 ? (
+              <div className="bg-slate-50 border border-slate-100 border-dashed rounded-3xl p-20 text-center">
+                <div className="bg-white w-16 h-16 rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 text-slate-300">
+                  <Filter size={32} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-700 mb-2">No matching products</h3>
+                <p className="text-slate-500 max-w-xs mx-auto">Try adjusting your filters or search keywords to find what you're looking for.</p>
+                <button onClick={() => {setCategory(''); }} className="mt-8 text-indigo-600 font-bold hover:underline">Clear all filters</button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-12">
+                {data.products.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
-
-        {isLoading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600"></div>
-          </div>
-        ) : error ? (
-          <div className="bg-rose-50 text-rose-600 p-6 rounded-2xl border border-rose-100 text-center font-medium shadow-sm">
-            {error?.data?.message || error.error}
-          </div>
-        ) : data.products.length === 0 ? (
-          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-12 text-center">
-            <h3 className="text-xl font-bold text-slate-700 mb-2">No products found</h3>
-            <p className="text-slate-500">We couldn't find any products matching your criteria.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
-            {data.products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
