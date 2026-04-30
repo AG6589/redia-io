@@ -170,36 +170,8 @@ Use these credentials to access the Admin Panel:
 <img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/8f7521e8-71d8-4dd2-9363-1856e966dfe8" />
 <img width="1905" height="818" alt="image" src="https://github.com/user-attachments/assets/9f04ffe8-a995-4f63-a2b4-29a4ab56eddf" />
 
-## 🚀 Deployment (Render)
-
-This project is configured for easy deployment on **Render** using the provided `render.yaml` blueprint.
-
-### 1. Connect to GitHub
-- Log in to [Render](https://render.com/).
-- Click **"New +"** and select **"Blueprint"**.
-- Connect your GitHub repository (`redia-io`).
-
-### 2. Configure Environment Variables
-Render will automatically detect the services. You need to manually add the following variables in the Render Dashboard for the **Backend** service:
-- `MONGO_URI`: Your MongoDB Atlas connection string.
-- `JWT_SECRET`: A secure random string for JWT.
-
-### 3. Build & Start
-- **Backend Service**:
-  - Root Directory: `backend`
-  - Build Command: `npm install`
-  - Start Command: `npm start`
-- **Frontend Service**:
-  - Root Directory: `frontend`
-  - Build Command: `npm install; npm run build`
-  - Publish Directory: `dist`
-
-### 4. Database Seeding
-After the backend is live, you can seed the database by running the seeder from the Render dashboard (using the "Shell" tab) or locally:
-```bash
-cd backend
-npm run data:import
-```
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 Built with ❤️ by [Aman Gupta](https://github.com/google-deepmind)
